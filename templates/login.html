@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StudyTrack</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="login-body">
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <h1 class="login-brand">StudyTrack</h1>
+                <p class="login-subtitle">Sign in to manage your study tasks</p>
+            </div>
+
+            {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" action="" class="login-form" onsubmit="if(this.submitted) return false; this.submitted=true; this.querySelector('button[type=submit]').innerText='Logging in...'; return true;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+                
+                <div class="form-group">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" name="username" id="id_username" class="form-input" placeholder="Enter your username" autofocus required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" name="password" id="id_password" class="form-input" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+
+            <div class="login-footer">
+                <p class="login-help-text">Default demo accounts: <strong>student</strong> / <strong>student123</strong> or <strong>admin</strong> / <strong>admin123</strong></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
